@@ -1,0 +1,214 @@
+Create a modern, premium-looking reselling e-commerce website inspired by Flipkart, Amazon, and Meesho, but DO NOT copy their design. Make it unique, stylish, clean, mobile-friendly, and attractive for young users and family customers. The website should feel professional, smooth, fast, and trustworthy.
+
+IMPORTANT:
+This is not for Play Store or App Store. I only want a WEBSITE with a shareable link that I can send to family, friends, and customers through WhatsApp or social media.
+
+TECH STACK:
+Use React + Next.js (or Vite React), Tailwind CSS, Framer Motion animations, Firebase or Supabase for backend/database/storage/authentication, and make everything connected permanently in real time.
+
+MAIN REQUIREMENTS:
+
+1. USER WEBSITE (CLIENT SIDE)
+
+* Attractive homepage with banners, offers, trending products, and animations.
+* Add a customizable front page section where admin can change text anytime like:
+
+  * “Today’s Mega Offer”
+  * “Festival Sale”
+  * “Limited Time Deals”
+  * “Free Delivery Today”
+* Responsive design for mobile and desktop.
+* Search bar to search products instantly.
+* Product categories section.
+* Trending products carousel.
+* Modern product cards with:
+
+  * Product image
+  * Product name
+  * Original price
+  * Offer price
+  * Discount percentage
+  * “Sold Out” badge if stock unavailable
+  * Add to Cart button
+  * Buy Now button
+* Product details page with:
+
+  * Multiple images
+  * Product description
+  * Offer details
+  * Stock status
+  * WhatsApp contact button
+* Shopping cart system:
+
+  * Add multiple products
+  * Increase/decrease quantity
+  * Remove items
+  * Bulk ordering support
+* Checkout page:
+
+  * Customer MUST enter:
+
+    * Full Name
+    * Phone Number
+    * Address
+  * Order summary visible
+  * Payment options:
+
+    * Cash on Delivery
+    * Pay Online
+* After order submission:
+
+  * Save order permanently in database
+  * Show success page
+  * Send order to admin dashboard
+* Floating WhatsApp button on all pages.
+* Admin should be able to change WhatsApp number anytime from admin panel.
+* Smooth animations and premium UI effects.
+* Dark/light modern color theme.
+* Loading skeletons and smooth transitions.
+
+2. ADMIN PANEL (HIDDEN & SECURE)
+
+* Hidden admin login page.
+* Secure password-protected admin authentication.
+* Only admin can access dashboard.
+* Admin panel should NOT be visible to normal users.
+* Dashboard should contain:
+
+  * Add products
+  * Edit products
+  * Delete products
+  * Mark products as Sold Out
+  * Change homepage banners/text/offers
+  * Change WhatsApp number
+  * View all customer orders
+  * View payment method selected
+  * View customer details
+  * Search orders
+  * Filter orders
+* Product upload system:
+
+  * Upload product images directly from gallery/device storage
+  * NOT image URLs
+  * Images stored permanently in Firebase Storage or Supabase Storage
+* Product fields:
+
+  * Product Name
+  * Price
+  * Offer Price
+  * Product Images
+  * Product Description
+  * Category
+  * Stock status
+* Real-time updates:
+
+  * Any admin changes should instantly appear on user website.
+* Database should permanently store:
+
+  * Products
+  * Orders
+  * Settings
+  * Homepage banners
+  * WhatsApp number
+  * Sold out status
+
+3. FULL HOMEPAGE CUSTOMIZATION FROM ADMIN PANEL
+
+* Create a powerful homepage customization system inside admin panel.
+* Admin should be able to fully edit and control the client homepage without touching code.
+* Admin can:
+
+  * Change homepage layout
+  * Add/remove homepage sections
+  * Change banners
+  * Upload banner images from gallery
+  * Change offer text
+  * Add announcement bars
+  * Change hero section
+  * Add festival themes
+  * Reorder product sections by drag and drop
+  * Enable/disable sections instantly
+  * Change colors and themes
+  * Add featured products manually
+  * Add scrolling offer text
+  * Add popup offers
+  * Add homepage sliders/carousels
+* All homepage changes should update live instantly on client website.
+* Homepage customization data must save permanently in database.
+
+4. ORDER MANAGEMENT SYSTEM
+
+* Every order placed by customer must instantly appear in admin dashboard.
+* Admin dashboard should show:
+
+  * Customer name
+  * Phone number
+  * Address
+  * Ordered products
+  * Product quantity
+  * Payment method
+  * Order total
+  * Date and time
+  * Order ID
+  * Order status
+* Admin can:
+
+  * Accept orders
+  * Mark orders as packed/shipped/delivered
+  * Cancel orders
+  * Search customer orders
+  * Filter by payment method or order status
+* Orders should be permanently stored in Firebase/Supabase database.
+* Add notification badge in admin panel when new order arrives.
+
+5. DESIGN REQUIREMENTS
+
+* Design should feel premium and modern.
+* NOT a copy of Amazon or Flipkart.
+* Use glassmorphism, gradients, shadows, smooth hover effects, rounded cards, modern fonts, and smooth animations.
+* Attractive hero section on homepage.
+* Professional loading animations.
+* Beautiful mobile UI because most users use phones.
+* Use Framer Motion animations.
+* Add smooth transitions everywhere.
+* Make the website feel expensive and premium.
+
+6. EXTRA FEATURES
+   Add these extra smart features:
+
+* Product wishlist
+* Recently added products section
+* Featured products section
+* Order confirmation popup
+* Admin analytics dashboard
+* Product stock counter
+* Auto-generated order ID
+* Customer order tracking status
+* Toast notifications
+* Responsive navbar
+* Footer with contact info and social links
+* SEO optimization
+* Fast loading performance
+* PWA support (optional)
+
+7. DEPLOYMENT
+
+* Prepare the project fully ready for deployment.
+* Include environment variables setup.
+* Include Firebase/Supabase configuration.
+* Make it easy to deploy on Vercel or Netlify.
+* Generate clean folder structure and scalable code.
+
+8. FINAL OUTPUT
+   Generate:
+
+* Full frontend code
+* Backend/database integration
+* Authentication setup
+* Firebase/Supabase setup instructions
+* Admin panel
+* Responsive UI
+* Deployment steps
+* Complete working project structure
+
+The final result should look like a real modern e-commerce brand and not like a beginner project.
