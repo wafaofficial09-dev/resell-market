@@ -92,7 +92,7 @@ export default function ProductDetail() {
           <div className="grid md:grid-cols-2 gap-12 items-start">
             {/* Image Gallery */}
             <div className="space-y-4 sticky top-24">
-              <div className="aspect-square rounded-3xl overflow-hidden bg-muted/30 border">
+              <div className="aspect-[4/3] md:aspect-[5/4] rounded-3xl overflow-hidden bg-muted/30 border">
                 <AnimatePresence mode="wait">
                   <motion.img 
                     key={currentImage}
@@ -136,14 +136,14 @@ export default function ProductDetail() {
                 </span>
               )}
               
-              <h1 className="text-3xl md:text-5xl font-display font-bold mb-4 leading-tight">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-4 leading-snug max-w-lg">
                 {product.name}
               </h1>
               
-              <div className="flex items-center gap-4 mb-6">
-                <span className="text-4xl font-bold">₹{product.offerPrice}</span>
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-2xl md:text-3xl font-bold">₹{product.offerPrice?.toLocaleString()}</span>
                 {product.price > product.offerPrice && (
-                  <span className="text-xl text-muted-foreground line-through">₹{product.price}</span>
+                  <span className="text-base text-muted-foreground line-through">₹{product.price?.toLocaleString()}</span>
                 )}
                 {product.discountPercent && product.discountPercent > 0 ? (
                   <Badge className="bg-secondary text-white border-none ml-2">
@@ -159,7 +159,7 @@ export default function ProductDetail() {
                 </div>
               )}
 
-              <div className="prose prose-gray dark:prose-invert max-w-none mb-8 text-muted-foreground text-lg">
+              <div className="prose prose-gray dark:prose-invert max-w-none mb-8 text-muted-foreground text-sm md:text-base leading-relaxed">
                 {product.description || "No description available."}
               </div>
               
@@ -196,14 +196,14 @@ export default function ProductDetail() {
                   </span>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <div className="flex flex-col sm:flex-row gap-3 pt-4">
                   <Button 
                     size="lg" 
-                    className="flex-1 rounded-full text-lg h-14 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
+                    className="flex-1 rounded-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
                     onClick={handleAddToCart}
                     disabled={!product.inStock}
                   >
-                    <ShoppingCart className="mr-2 h-5 w-5" />
+                    <ShoppingCart className="mr-2 h-4 w-4" />
                     {product.inStock ? "Add to Cart" : "Sold Out"}
                   </Button>
                   
@@ -211,7 +211,7 @@ export default function ProductDetail() {
                     <Button 
                       size="lg" 
                       variant="outline"
-                      className="flex-1 rounded-full text-lg h-14 border-[#25D366] text-[#25D366] hover:bg-[#25D366] hover:text-white"
+                      className="flex-1 rounded-full h-12 border-[#25D366] text-[#25D366] hover:bg-[#25D366] hover:text-white"
                       asChild
                     >
                       <a href={`https://wa.me/${settings.whatsappNumber}?text=${whatsappMessage}`} target="_blank" rel="noreferrer">
