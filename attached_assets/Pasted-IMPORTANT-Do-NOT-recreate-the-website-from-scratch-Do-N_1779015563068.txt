@@ -1,0 +1,185 @@
+IMPORTANT:
+Do NOT recreate the website from scratch.
+Do NOT remove existing working functionality.
+Only MODIFY and IMPROVE the existing codebase professionally.
+
+The website already looks good, but I need advanced UI/UX improvements and smarter functionality additions.
+
+1. FIX HERO BANNER SECTION (IMPORTANT)
+   Currently there is a large white/gray rectangular box covering the banner image in the homepage hero section.
+
+I want this removed or redesigned professionally.
+
+Requirements:
+
+* Make the full banner image clearly visible.
+* Do not block the banner with a large solid rectangle.
+* Keep text readable without hiding the banner.
+* Use elegant premium overlays only if necessary.
+* Use luxury glassmorphism instead of a plain box.
+* Improve spacing and alignment.
+* Make hero section feel cinematic and premium.
+
+The hero section should look like:
+
+* Luxury e-commerce brand
+* Premium fashion website
+* Modern startup homepage
+
+Improve:
+
+* Banner visibility
+* Typography
+* Text positioning
+* Button styling
+* Overlay gradients
+* Animations
+* Mobile responsiveness
+
+2. CLICKABLE BANNERS WITH PRODUCT LINKING
+   When customer clicks a homepage banner:
+
+* Open a product collection page related to that banner.
+
+Example:
+
+* Eid Sale Banner → Opens Eid Sale products
+* Electronics Banner → Opens Electronics products
+
+Admin should be able to:
+
+* Select products connected to each banner
+* Change linked products anytime
+* Choose categories or manual products
+* Add redirect URLs internally
+
+Requirements:
+
+* Dynamic banner-product linking
+* Smooth page transition
+* Mobile responsive slider
+* SEO-friendly routing
+
+3. CUSTOMER LOGIN / ACCOUNT SYSTEM
+   Add a customer account system professionally.
+
+Features:
+
+* Customer Sign Up
+* Customer Login
+* Forgot Password
+* Session persistence
+* Secure authentication
+
+After login customer can:
+
+* View previous orders
+* Save addresses
+* Track orders
+* Save wishlist
+* Faster checkout
+
+4. GUEST CHECKOUT OPTION (IMPORTANT)
+   Also allow customers to order WITHOUT login.
+
+Requirements:
+
+* Guest checkout support
+* Customer can place order using:
+
+  * Name
+  * Phone Number
+  * Address
+
+Even without account:
+
+* Orders should save properly
+* Order tracking should still work
+
+5. CATEGORY SECTION IMPROVEMENT
+   Currently category cards look too plain.
+
+Improve them professionally.
+
+Requirements:
+
+* Add relatable category images/icons
+* Use premium visuals
+* Better hover animations
+* Better spacing
+* More luxurious cards
+* Add subtle gradients/glow effects
+* Make categories feel branded and modern
+
+Example:
+
+* Fashion → Clothing image
+* Electronics → Gadgets image
+* Beauty → Makeup/luxury cosmetic image
+* Home → Interior/home image
+
+Use:
+
+* Rounded premium cards
+* Glassmorphism
+* Better shadows
+* Smooth transitions
+* Hover lift effects
+
+6. LUXURY UI IMPROVEMENTS
+   Further improve the overall website design.
+
+Upgrade:
+
+* Product cards
+* Hero section
+* Navbar
+* Buttons
+* Fonts
+* Section spacing
+* Shadows
+* Gradients
+* Loading animations
+* Mobile UI
+* Footer
+* Checkout design
+* Product gallery
+* Admin dashboard styling
+
+The final UI should feel:
+
+* Elegant
+* Luxury
+* Premium
+* Expensive
+* Smooth
+* Modern
+* Highly polished
+
+7. ADMIN PANEL UPGRADES
+   Add controls inside admin dashboard for:
+
+* Banner product linking
+* Banner click redirect
+* Category image upload
+* Hero banner editing
+* Hero overlay control
+* Customer management
+* Order tracking management
+
+8. PERFORMANCE & RESPONSIVENESS
+   Ensure:
+
+* Mobile-first responsive design
+* Fast loading
+* Optimized images
+* Lazy loading
+* Smooth animations
+* Better SEO
+* Better Lighthouse score
+
+9. FINAL REQUIREMENT
+   Only improve and modify the existing website intelligently.
+   Do not rebuild from zero.
+   Keep all current functionality working.
+   Make the final website feel like a real premium luxury e-commerce platform similar to a high-end shopping brand.
