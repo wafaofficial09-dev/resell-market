@@ -112,6 +112,8 @@ export const ListProductsResponseItem = zod.object({
   "inStock": zod.boolean(),
   "featured": zod.boolean().optional(),
   "stockCount": zod.number().nullish(),
+  "hasDeliveryCharge": zod.boolean().optional(),
+  "deliveryCharge": zod.number().nullish(),
   "createdAt": zod.string()
 })
 export const ListProductsResponse = zod.array(ListProductsResponseItem)
@@ -129,7 +131,9 @@ export const CreateProductBody = zod.object({
   "categoryId": zod.number().nullish(),
   "inStock": zod.boolean().optional(),
   "featured": zod.boolean().optional(),
-  "stockCount": zod.number().nullish()
+  "stockCount": zod.number().nullish(),
+  "hasDeliveryCharge": zod.boolean().optional(),
+  "deliveryCharge": zod.number().nullish()
 })
 
 
@@ -149,6 +153,8 @@ export const ListFeaturedProductsResponseItem = zod.object({
   "inStock": zod.boolean(),
   "featured": zod.boolean().optional(),
   "stockCount": zod.number().nullish(),
+  "hasDeliveryCharge": zod.boolean().optional(),
+  "deliveryCharge": zod.number().nullish(),
   "createdAt": zod.string()
 })
 export const ListFeaturedProductsResponse = zod.array(ListFeaturedProductsResponseItem)
@@ -170,6 +176,8 @@ export const ListRecentProductsResponseItem = zod.object({
   "inStock": zod.boolean(),
   "featured": zod.boolean().optional(),
   "stockCount": zod.number().nullish(),
+  "hasDeliveryCharge": zod.boolean().optional(),
+  "deliveryCharge": zod.number().nullish(),
   "createdAt": zod.string()
 })
 export const ListRecentProductsResponse = zod.array(ListRecentProductsResponseItem)
@@ -195,6 +203,8 @@ export const GetProductResponse = zod.object({
   "inStock": zod.boolean(),
   "featured": zod.boolean().optional(),
   "stockCount": zod.number().nullish(),
+  "hasDeliveryCharge": zod.boolean().optional(),
+  "deliveryCharge": zod.number().nullish(),
   "createdAt": zod.string()
 })
 
@@ -215,7 +225,9 @@ export const UpdateProductBody = zod.object({
   "categoryId": zod.number().nullish(),
   "inStock": zod.boolean().optional(),
   "featured": zod.boolean().optional(),
-  "stockCount": zod.number().nullish()
+  "stockCount": zod.number().nullish(),
+  "hasDeliveryCharge": zod.boolean().optional(),
+  "deliveryCharge": zod.number().nullish()
 })
 
 export const UpdateProductResponse = zod.object({
@@ -231,6 +243,8 @@ export const UpdateProductResponse = zod.object({
   "inStock": zod.boolean(),
   "featured": zod.boolean().optional(),
   "stockCount": zod.number().nullish(),
+  "hasDeliveryCharge": zod.boolean().optional(),
+  "deliveryCharge": zod.number().nullish(),
   "createdAt": zod.string()
 })
 
@@ -268,6 +282,8 @@ export const UpdateProductStockResponse = zod.object({
   "inStock": zod.boolean(),
   "featured": zod.boolean().optional(),
   "stockCount": zod.number().nullish(),
+  "hasDeliveryCharge": zod.boolean().optional(),
+  "deliveryCharge": zod.number().nullish(),
   "createdAt": zod.string()
 })
 
@@ -460,6 +476,34 @@ export const UpdateBannerResponse = zod.object({
  */
 export const DeleteBannerParams = zod.object({
   "id": zod.coerce.number()
+})
+
+
+/**
+ * @summary Request a presigned URL for file upload
+ */
+
+
+
+
+
+export const RequestUploadUrlBody = zod.object({
+  "name": zod.string().min(1),
+  "size": zod.number().min(1),
+  "contentType": zod.string().min(1)
+})
+
+export const RequestUploadUrlResponse = zod.object({
+  "uploadURL": zod.string().url(),
+  "objectPath": zod.string()
+})
+
+
+/**
+ * @summary Serve an uploaded object
+ */
+export const GetStorageObjectParams = zod.object({
+  "objectPath": zod.coerce.string()
 })
 
 

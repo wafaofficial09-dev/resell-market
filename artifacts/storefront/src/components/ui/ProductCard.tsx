@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/use-cart";
 import { toast } from "sonner";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Truck } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface ProductCardProps {
@@ -27,6 +27,8 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       price: product.price,
       offerPrice: product.offerPrice,
       quantity: 1,
+      hasDeliveryCharge: product.hasDeliveryCharge ?? false,
+      deliveryCharge: product.deliveryCharge ?? null,
     });
     
     toast.success("Added to cart", {
@@ -99,6 +101,11 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                   </span>
                 )}
               </div>
+              {product.hasDeliveryCharge && (
+                <p className="text-xs text-amber-600 flex items-center gap-1 mt-0.5">
+                  <Truck className="h-3 w-3" />+₹{product.deliveryCharge || 50} delivery
+                </p>
+              )}
             </div>
           </CardContent>
         </Card>

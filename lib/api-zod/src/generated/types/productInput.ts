@@ -19,4 +19,7 @@ export interface ProductInput {
   featured?: boolean;
   /** @nullable */
   stockCount?: number | null;
+  hasDeliveryCharge?: boolean;
+  /** @nullable */
+  deliveryCharge?: number | null;
 }

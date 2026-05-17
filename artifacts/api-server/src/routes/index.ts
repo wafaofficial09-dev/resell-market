@@ -7,6 +7,7 @@ import productsRouter from "./products";
 import ordersRouter from "./orders";
 import bannersRouter from "./banners";
 import settingsRouter from "./settings";
+import storageRouter from "./storage";
 
 const router: IRouter = Router();
 
@@ -19,5 +20,6 @@ router.use(productsRouter);
 router.use(ordersRouter);
 router.use(bannersRouter);
 router.use(settingsRouter);
+router.use(storageRouter);
 
 export default router;

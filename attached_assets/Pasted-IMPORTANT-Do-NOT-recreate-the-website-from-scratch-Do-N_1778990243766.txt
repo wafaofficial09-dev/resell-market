@@ -1,0 +1,153 @@
+IMPORTANT:
+Do NOT recreate the website from scratch.
+Do NOT change the existing project structure unnecessarily.
+Do NOT remove existing features.
+Only MODIFY and IMPROVE the current codebase professionally.
+
+The website is already working well, but I need the following upgrades and fixes added properly into the existing system.
+
+1. PRODUCT IMAGE UPLOAD FIX (IMPORTANT)
+   Currently, the admin product form asks for an image URL.
+
+I want this removed completely.
+
+Replace it with:
+
+* “Select Images From Device/Gallery”
+* Proper image upload component
+* Drag-and-drop upload support (optional)
+* Mobile gallery support
+* File preview before upload
+
+Use Firebase Storage or Supabase Storage properly.
+
+Images should upload automatically and store permanently.
+
+2. MULTIPLE PRODUCT IMAGES
+   Currently, one product supports only one image.
+
+Upgrade the product system so each product supports:
+
+* Multiple images
+* Product image gallery
+* Image slider/carousel on product page
+* Thumbnail preview selector
+* Main image switching animation
+
+Admin should be able to:
+
+* Upload multiple images
+* Delete individual images
+* Reorder images
+
+Frontend should:
+
+* Display all images beautifully
+* Work smoothly on mobile
+
+3. DELIVERY CHARGE OPTION PER PRODUCT
+   Add a delivery charge toggle inside admin product settings.
+
+Example:
+
+* “Enable Delivery Charge”
+
+If enabled:
+
+* Automatically add ₹50 delivery fee during checkout for that product.
+
+Requirements:
+
+* Delivery fee should appear clearly in cart and checkout summary.
+* Total amount should update automatically.
+* Works for multiple products.
+* If multiple delivery-charge products exist, calculate properly.
+* Admin can:
+
+  * Enable/disable delivery fee
+  * Change delivery amount
+
+4. COMPULSORY CUSTOMER DETAILS BEFORE ORDER
+   Currently customers can proceed easily.
+
+Make these fields REQUIRED before placing order:
+
+* Full Name
+* Phone Number
+
+Optional:
+
+* Address
+* Notes
+
+Requirements:
+
+* Proper form validation
+* Show error messages
+* Prevent order submission if fields are empty
+* Mobile-friendly form design
+* Better input UI
+
+5. IMPROVE WEBSITE ELEGANCE & PREMIUM LOOK
+   Do NOT redesign from scratch.
+
+Only improve the current UI professionally.
+
+Upgrade:
+
+* Typography
+* Card shadows
+* Glassmorphism effects
+* Product spacing
+* Buttons
+* Hover animations
+* Loading animations
+* Mobile responsiveness
+* Checkout design
+* Product gallery
+* Navbar polish
+* Premium gradients
+* Smooth transitions
+
+Make the website feel:
+
+* More premium
+* More modern
+* More expensive
+* More polished
+* More trustworthy
+
+6. ADMIN PANEL IMPROVEMENTS
+   Improve the admin product form UI:
+
+* Better spacing
+* Image previews
+* Cleaner layout
+* Mobile responsive
+* Better switches/toggles
+* Toast notifications
+* Upload progress indicator
+
+7. DATABASE & BACKEND UPDATE
+   Update database structure safely without breaking existing products/orders.
+
+Add support for:
+
+* Multiple images array
+* Delivery charge settings
+* Product delivery fee
+* Image storage references
+
+Ensure:
+
+* Old products still work
+* Realtime updates still work
+* No database errors
+* No RLS/security issues
+
+8. FINAL REQUIREMENT
+   Only modify the existing codebase intelligently.
+   Do not rebuild the whole website.
+   Keep all current functionality working.
+   Add these features professionally and production-ready.
+   Make all changes scalable, optimized, responsive, and visually premium.

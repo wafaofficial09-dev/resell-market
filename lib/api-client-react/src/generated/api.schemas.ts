@@ -52,6 +52,9 @@ export interface Product {
   featured?: boolean;
   /** @nullable */
   stockCount?: number | null;
+  hasDeliveryCharge?: boolean;
+  /** @nullable */
+  deliveryCharge?: number | null;
   createdAt: string;
 }
 
@@ -68,6 +71,9 @@ export interface ProductInput {
   featured?: boolean;
   /** @nullable */
   stockCount?: number | null;
+  hasDeliveryCharge?: boolean;
+  /** @nullable */
+  deliveryCharge?: number | null;
 }
 
 export interface StockUpdate {
@@ -196,6 +202,24 @@ export interface SettingsInput {
   socialInstagram?: string | null;
   /** @nullable */
   socialFacebook?: string | null;
+}
+
+export interface UploadUrlRequest {
+  /** @minLength 1 */
+  name: string;
+  /** @minimum 1 */
+  size: number;
+  /** @minLength 1 */
+  contentType: string;
+}
+
+export interface UploadUrlResponse {
+  uploadURL: string;
+  objectPath: string;
+}
+
+export interface ErrorEnvelope {
+  error: string;
 }
 
 export type ListProductsParams = {

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { db, productsTable, categoriesTable } from "@workspace/db";
-import { eq, ilike, and, desc } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import {
   ListProductsQueryParams,
   CreateProductBody,
@@ -15,7 +15,7 @@ import { requireAdmin } from "./auth";
 
 const router = Router();
 
-function formatProduct(p: any, cat?: any) {
+function formatProduct(p: any) {
   const price = parseFloat(p.price);
   const offerPrice = parseFloat(p.offerPrice);
   const discountPercent = price > 0 ? Math.round(((price - offerPrice) / price) * 100) : null;
@@ -28,10 +28,12 @@ function formatProduct(p: any, cat?: any) {
     discountPercent,
     images: p.images ?? [],
     categoryId: p.categoryId ?? null,
-    categoryName: cat?.name ?? p.categoryName ?? null,
+    categoryName: p.categoryName ?? null,
     inStock: p.inStock,
     featured: p.featured,
     stockCount: p.stockCount ?? null,
+    hasDeliveryCharge: p.hasDeliveryCharge ?? false,
+    deliveryCharge: p.deliveryCharge !== null && p.deliveryCharge !== undefined ? parseFloat(p.deliveryCharge) : null,
     createdAt: p.createdAt instanceof Date ? p.createdAt.toISOString() : p.createdAt,
   };
 }
@@ -50,6 +52,8 @@ async function getProducts(filters: { categorySlug?: string | null; search?: str
       inStock: productsTable.inStock,
       featured: productsTable.featured,
       stockCount: productsTable.stockCount,
+      hasDeliveryCharge: productsTable.hasDeliveryCharge,
+      deliveryCharge: productsTable.deliveryCharge,
       createdAt: productsTable.createdAt,
     })
     .from(productsTable)
@@ -64,7 +68,7 @@ async function getProducts(filters: { categorySlug?: string | null; search?: str
       if (filters.categorySlug && p.categoryName?.toLowerCase() !== filters.categorySlug.toLowerCase() && p.categoryId?.toString() !== filters.categorySlug) return false;
       return true;
     })
-    .map((p) => formatProduct(p));
+    .map(formatProduct);
 }
 
 router.get("/products", async (req, res): Promise<void> => {
@@ -121,6 +125,8 @@ router.get("/products/:id", async (req, res): Promise<void> => {
         inStock: productsTable.inStock,
         featured: productsTable.featured,
         stockCount: productsTable.stockCount,
+        hasDeliveryCharge: productsTable.hasDeliveryCharge,
+        deliveryCharge: productsTable.deliveryCharge,
         createdAt: productsTable.createdAt,
       })
       .from(productsTable)
@@ -148,6 +154,8 @@ router.post("/products", requireAdmin, async (req, res): Promise<void> => {
       inStock: parsed.data.inStock ?? true,
       featured: parsed.data.featured ?? false,
       stockCount: parsed.data.stockCount ?? null,
+      hasDeliveryCharge: parsed.data.hasDeliveryCharge ?? false,
+      deliveryCharge: parsed.data.deliveryCharge !== undefined && parsed.data.deliveryCharge !== null ? String(parsed.data.deliveryCharge) : "50",
     }).returning();
     res.status(201).json(formatProduct(p));
   } catch (err) {
@@ -171,6 +179,8 @@ router.put("/products/:id", requireAdmin, async (req, res): Promise<void> => {
     if (body.data.inStock !== undefined) updateData.inStock = body.data.inStock;
     if (body.data.featured !== undefined) updateData.featured = body.data.featured;
     if (body.data.stockCount !== undefined) updateData.stockCount = body.data.stockCount;
+    if (body.data.hasDeliveryCharge !== undefined) updateData.hasDeliveryCharge = body.data.hasDeliveryCharge;
+    if (body.data.deliveryCharge !== undefined) updateData.deliveryCharge = body.data.deliveryCharge !== null ? String(body.data.deliveryCharge) : "50";
     const [p] = await db.update(productsTable).set(updateData).where(eq(productsTable.id, params.data.id)).returning();
     if (!p) { res.status(404).json({ error: "Not found" }); return; }
     res.json(formatProduct(p));

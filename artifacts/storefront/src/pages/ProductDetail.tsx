@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/hooks/use-cart";
 import { toast } from "sonner";
-import { ShoppingCart, MessageCircle, ChevronLeft, Minus, Plus } from "lucide-react";
+import { ShoppingCart, MessageCircle, ChevronLeft, Minus, Plus, Truck } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function ProductDetail() {
@@ -69,6 +69,8 @@ export default function ProductDetail() {
       price: product.price,
       offerPrice: product.offerPrice,
       quantity,
+      hasDeliveryCharge: product.hasDeliveryCharge ?? false,
+      deliveryCharge: product.deliveryCharge ?? null,
     });
     toast.success("Added to cart", {
       description: `${quantity}x ${product.name} has been added to your cart.`,
@@ -149,6 +151,13 @@ export default function ProductDetail() {
                   </Badge>
                 ) : null}
               </div>
+
+              {product.hasDeliveryCharge && (
+                <div className="flex items-center gap-2 mb-4 text-sm text-amber-600 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/30 rounded-xl px-4 py-2.5 w-fit">
+                  <Truck className="h-4 w-4 shrink-0" />
+                  <span>Delivery charge: <strong>₹{product.deliveryCharge || 50}</strong></span>
+                </div>
+              )}
 
               <div className="prose prose-gray dark:prose-invert max-w-none mb-8 text-muted-foreground text-lg">
                 {product.description || "No description available."}

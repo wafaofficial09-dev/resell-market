@@ -8,6 +8,8 @@ export interface CartItem {
   price: number;
   offerPrice: number;
   quantity: number;
+  hasDeliveryCharge?: boolean;
+  deliveryCharge?: number | null;
 }
 
 interface CartStore {
@@ -17,6 +19,8 @@ interface CartStore {
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
   getCartTotal: () => number;
+  getDeliveryTotal: () => number;
+  getGrandTotal: () => number;
   getCartCount: () => number;
 }
 
@@ -27,12 +31,11 @@ export const useCart = create<CartStore>()(
       addItem: (item) => {
         const { items } = get();
         const existingItem = items.find((i) => i.productId === item.productId);
-        
         if (existingItem) {
           set({
-            items: items.map((i) => 
-              i.productId === item.productId 
-                ? { ...i, quantity: i.quantity + (item.quantity || 1) } 
+            items: items.map((i) =>
+              i.productId === item.productId
+                ? { ...i, quantity: i.quantity + (item.quantity || 1) }
                 : i
             )
           });
@@ -49,7 +52,7 @@ export const useCart = create<CartStore>()(
           return;
         }
         set({
-          items: get().items.map((i) => 
+          items: get().items.map((i) =>
             i.productId === productId ? { ...i, quantity } : i
           )
         });
@@ -57,6 +60,20 @@ export const useCart = create<CartStore>()(
       clearCart: () => set({ items: [] }),
       getCartTotal: () => {
         return get().items.reduce((total, item) => total + (item.offerPrice * item.quantity), 0);
+      },
+      getDeliveryTotal: () => {
+        const chargedProducts = new Set<number>();
+        return get().items.reduce((total, item) => {
+          if (item.hasDeliveryCharge && !chargedProducts.has(item.productId)) {
+            chargedProducts.add(item.productId);
+            return total + (item.deliveryCharge || 50);
+          }
+          return total;
+        }, 0);
+      },
+      getGrandTotal: () => {
+        const store = get();
+        return store.getCartTotal() + store.getDeliveryTotal();
       },
       getCartCount: () => {
         return get().items.reduce((count, item) => count + item.quantity, 0);

@@ -13,6 +13,8 @@ export const productsTable = pgTable("products", {
   inStock: boolean("in_stock").notNull().default(true),
   featured: boolean("featured").notNull().default(false),
   stockCount: integer("stock_count"),
+  hasDeliveryCharge: boolean("has_delivery_charge").notNull().default(false),
+  deliveryCharge: numeric("delivery_charge", { precision: 10, scale: 2 }).default("50"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
