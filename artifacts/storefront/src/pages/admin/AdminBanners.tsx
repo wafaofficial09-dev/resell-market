@@ -7,10 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { SingleImageUpload } from "@/components/admin/ImageUpload";
 import { toast } from "sonner";
-import { Plus, Edit, Trash2, ImageIcon } from "lucide-react";
+import { Plus, Edit, Trash2, ImageIcon, Loader2, ArrowUpDown } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminBanners() {
   const { data: banners, isLoading } = useListBanners();
@@ -19,7 +22,7 @@ export default function AdminBanners() {
   const updateBanner = useUpdateBanner();
 
   const handleDelete = (id: number) => {
-    if (confirm("Are you sure you want to delete this banner?")) {
+    if (confirm("Delete this banner?")) {
       deleteBanner.mutate({ id }, {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: getListBannersQueryKey() });
@@ -33,7 +36,7 @@ export default function AdminBanners() {
     updateBanner.mutate({ id, data: { active: !currentActive } as any }, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: getListBannersQueryKey() });
-        toast.success(`Banner ${!currentActive ? 'activated' : 'deactivated'}`);
+        toast.success(`Banner ${!currentActive ? "activated" : "deactivated"}`);
       }
     });
   };
@@ -41,66 +44,102 @@ export default function AdminBanners() {
   return (
     <AdminLayout>
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-display font-bold">Banners</h1>
+        <div>
+          <h1 className="text-2xl font-display font-bold">Banners</h1>
+          <p className="text-sm text-muted-foreground mt-1">Manage homepage carousel banners</p>
+        </div>
         <BannerFormDialog />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {isLoading ? (
-          Array(4).fill(0).map((_, i) => <Skeleton key={i} className="h-64 w-full rounded-xl" />)
-        ) : banners?.map((banner) => (
-          <Card key={banner.id} className="overflow-hidden flex flex-col">
-            <div className="aspect-[21/9] bg-muted relative">
-              {banner.imageUrl ? (
-                <img src={banner.imageUrl} alt={banner.title} className="w-full h-full object-cover" />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                  <ImageIcon className="h-12 w-12 opacity-20" />
-                </div>
-              )}
-              <div className="absolute top-2 right-2">
-                <Badge variant={banner.active ? "default" : "secondary"}>
-                  {banner.active ? "Active" : "Inactive"}
-                </Badge>
-              </div>
-            </div>
-            <CardContent className="p-4 flex-1 flex flex-col">
-              <h3 className="font-semibold text-xl mb-1">{banner.title}</h3>
-              {banner.subtitle && <p className="text-muted-foreground mb-4">{banner.subtitle}</p>}
-              
-              <div className="flex items-center justify-between mt-auto pt-4 border-t">
-                <div className="flex items-center space-x-2">
-                  <Switch 
-                    checked={banner.active} 
-                    onCheckedChange={() => toggleActive(banner.id, banner.active)} 
-                  />
-                  <Label>Active</Label>
-                </div>
-                <div className="flex gap-2">
-                  <BannerFormDialog bannerToEdit={banner} />
-                  <Button variant="outline" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={() => handleDelete(banner.id)}>
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-        {banners?.length === 0 && (
-          <div className="col-span-full py-20 text-center bg-muted/30 rounded-xl border border-dashed">
-            <p className="text-lg text-muted-foreground">No banners found. Create one to show on the homepage.</p>
+          Array(4).fill(0).map((_, i) => <Skeleton key={i} className="h-64 w-full rounded-2xl" />)
+        ) : (
+          <AnimatePresence>
+            {banners?.map((banner, idx) => (
+              <motion.div
+                key={banner.id}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ delay: idx * 0.06 }}
+              >
+                <Card className="overflow-hidden flex flex-col glass-card border-white/30 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 group">
+                  <div className="aspect-[21/9] bg-muted relative overflow-hidden">
+                    {banner.imageUrl ? (
+                      <img
+                        src={banner.imageUrl}
+                        alt={banner.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-gradient-to-br from-muted to-muted/50">
+                        <ImageIcon className="h-12 w-12 opacity-20" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute top-3 right-3">
+                      <Badge
+                        className={`text-xs font-bold shadow-lg ${
+                          banner.active
+                            ? "bg-green-500/90 text-white border-none"
+                            : "bg-black/40 text-white border-none"
+                        }`}
+                      >
+                        {banner.active ? "● Active" : "○ Inactive"}
+                      </Badge>
+                    </div>
+                    {banner.sortOrder !== undefined && (
+                      <div className="absolute top-3 left-3 bg-black/40 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1">
+                        <ArrowUpDown className="h-3 w-3" />
+                        Order: {banner.sortOrder}
+                      </div>
+                    )}
+                  </div>
+                  <CardContent className="p-5 flex-1 flex flex-col">
+                    <h3 className="font-display font-bold text-lg mb-0.5">{banner.title}</h3>
+                    {banner.subtitle && <p className="text-sm text-muted-foreground mb-4">{banner.subtitle}</p>}
+                    {banner.linkUrl && (
+                      <p className="text-xs text-primary/70 truncate mb-3">↗ {banner.linkUrl}</p>
+                    )}
+
+                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
+                      <div className="flex items-center gap-3">
+                        <Switch
+                          checked={banner.active}
+                          onCheckedChange={() => toggleActive(banner.id, banner.active)}
+                        />
+                        <Label className="text-sm text-muted-foreground cursor-pointer">
+                          {banner.active ? "Visible" : "Hidden"}
+                        </Label>
+                      </div>
+                      <div className="flex gap-2">
+                        <BannerFormDialog bannerToEdit={banner} />
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-destructive hover:text-destructive hover:bg-destructive/10 rounded-xl"
+                          onClick={() => handleDelete(banner.id)}
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        )}
+        {!isLoading && banners?.length === 0 && (
+          <div className="col-span-full py-24 text-center bg-muted/20 rounded-2xl border border-dashed">
+            <ImageIcon className="h-14 w-14 text-muted-foreground/20 mx-auto mb-4" />
+            <p className="text-lg font-semibold mb-2">No banners yet</p>
+            <p className="text-muted-foreground text-sm">Add your first banner to feature on the homepage carousel.</p>
           </div>
         )}
       </div>
     </AdminLayout>
-  );
-}
-
-function Badge({ children, variant }: { children: React.ReactNode, variant: "default" | "secondary" }) {
-  return (
-    <span className={`px-2 py-1 rounded text-xs font-bold shadow-md ${variant === 'default' ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>
-      {children}
-    </span>
   );
 }
 
@@ -117,11 +156,15 @@ function BannerFormDialog({ bannerToEdit }: { bannerToEdit?: any }) {
     imageUrl: bannerToEdit?.imageUrl || "",
     linkUrl: bannerToEdit?.linkUrl || "",
     active: bannerToEdit !== undefined ? bannerToEdit.active : true,
-    sortOrder: bannerToEdit?.sortOrder || "0",
+    sortOrder: bannerToEdit?.sortOrder?.toString() || "0",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.imageUrl) {
+      toast.error("Please upload a banner image");
+      return;
+    }
     const payload = {
       title: formData.title,
       subtitle: formData.subtitle || null,
@@ -131,21 +174,20 @@ function BannerFormDialog({ bannerToEdit }: { bannerToEdit?: any }) {
       sortOrder: Number(formData.sortOrder) || 0,
     };
 
+    const invalidate = () => {
+      queryClient.invalidateQueries({ queryKey: getListBannersQueryKey() });
+      setOpen(false);
+    };
+
     if (isEditing) {
       updateBanner.mutate({ id: bannerToEdit.id, data: payload }, {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: getListBannersQueryKey() });
-          toast.success("Banner updated");
-          setOpen(false);
-        }
+        onSuccess: () => { toast.success("Banner updated"); invalidate(); },
+        onError: () => toast.error("Failed to update banner"),
       });
     } else {
       createBanner.mutate({ data: payload }, {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: getListBannersQueryKey() });
-          toast.success("Banner created");
-          setOpen(false);
-        }
+        onSuccess: () => { toast.success("Banner created"); invalidate(); },
+        onError: () => toast.error("Failed to create banner"),
       });
     }
   };
@@ -154,56 +196,95 @@ function BannerFormDialog({ bannerToEdit }: { bannerToEdit?: any }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {isEditing ? (
-          <Button variant="outline" size="sm"><Edit className="h-4 w-4 mr-2" /> Edit</Button>
+          <Button variant="outline" size="sm" className="rounded-xl">
+            <Edit className="h-3.5 w-3.5 mr-1.5" /> Edit
+          </Button>
         ) : (
-          <Button><Plus className="h-4 w-4 mr-2" /> Add Banner</Button>
+          <Button className="rounded-xl">
+            <Plus className="h-4 w-4 mr-2" /> Add Banner
+          </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{isEditing ? "Edit Banner" : "Add New Banner"}</DialogTitle>
+          <DialogTitle className="text-xl font-display">{isEditing ? "Edit Banner" : "Add New Banner"}</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-6 mt-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label>Title</Label>
-              <Input required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} />
-            </div>
-            <div className="space-y-2">
-              <Label>Subtitle (Optional)</Label>
-              <Input value={formData.subtitle} onChange={e => setFormData({...formData, subtitle: e.target.value})} />
-            </div>
-            
-            <div className="space-y-2 md:col-span-2">
-              <Label>Image URL</Label>
-              <Input required placeholder="https://..." value={formData.imageUrl} onChange={e => setFormData({...formData, imageUrl: e.target.value})} />
-              {formData.imageUrl && (
-                <div className="mt-2 h-32 w-full rounded-xl border overflow-hidden bg-muted">
-                  <img src={formData.imageUrl} alt="Preview" className="h-full w-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
-                </div>
-              )}
-            </div>
+        <form onSubmit={handleSubmit} className="space-y-6 mt-2">
+          {/* Image Upload */}
+          <SingleImageUpload
+            label="Banner Image"
+            value={formData.imageUrl}
+            onChange={url => setFormData({ ...formData, imageUrl: url })}
+            aspectClass="aspect-[21/9]"
+            placeholder="Upload a wide banner image (recommended: 1920×600px)"
+          />
 
-            <div className="space-y-2">
-              <Label>Link URL (Optional)</Label>
-              <Input placeholder="/products?category=1" value={formData.linkUrl} onChange={e => setFormData({...formData, linkUrl: e.target.value})} />
+          {/* Title & Subtitle */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label className="text-sm font-semibold">Title *</Label>
+              <Input
+                required
+                value={formData.title}
+                onChange={e => setFormData({ ...formData, title: e.target.value })}
+                placeholder="e.g. Summer Sale"
+                className="rounded-xl h-11"
+              />
             </div>
-
-            <div className="space-y-2">
-              <Label>Sort Order</Label>
-              <Input type="number" value={formData.sortOrder} onChange={e => setFormData({...formData, sortOrder: e.target.value})} />
-            </div>
-
-            <div className="flex items-center space-x-2 md:col-span-2 p-4 bg-muted/30 rounded-xl border">
-              <Switch id="banner-active" checked={formData.active} onCheckedChange={checked => setFormData({...formData, active: checked})} />
-              <Label htmlFor="banner-active">Active (Visible on homepage)</Label>
+            <div className="space-y-1.5">
+              <Label className="text-sm font-semibold">Subtitle</Label>
+              <Input
+                value={formData.subtitle}
+                onChange={e => setFormData({ ...formData, subtitle: e.target.value })}
+                placeholder="e.g. Up to 50% off selected items"
+                className="rounded-xl h-11"
+              />
             </div>
           </div>
-          
-          <div className="flex justify-end gap-2 pt-4">
-            <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button type="submit" disabled={createBanner.isPending || updateBanner.isPending}>
-              {isEditing ? "Save Changes" : "Create Banner"}
+
+          {/* Link & Sort */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label className="text-sm font-semibold">Link URL</Label>
+              <Input
+                value={formData.linkUrl}
+                onChange={e => setFormData({ ...formData, linkUrl: e.target.value })}
+                placeholder="/products?category=1"
+                className="rounded-xl h-11"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-sm font-semibold">Sort Order</Label>
+              <Input
+                type="number"
+                value={formData.sortOrder}
+                onChange={e => setFormData({ ...formData, sortOrder: e.target.value })}
+                placeholder="0"
+                className="rounded-xl h-11"
+              />
+            </div>
+          </div>
+
+          {/* Active Toggle */}
+          <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border">
+            <div>
+              <Label className="text-sm font-semibold">Show on homepage</Label>
+              <p className="text-xs text-muted-foreground mt-0.5">Toggle to make this banner visible on the carousel</p>
+            </div>
+            <Switch
+              checked={formData.active}
+              onCheckedChange={checked => setFormData({ ...formData, active: checked })}
+            />
+          </div>
+
+          <div className="flex justify-end gap-3 pt-2">
+            <Button type="button" variant="outline" onClick={() => setOpen(false)} className="rounded-xl">Cancel</Button>
+            <Button type="submit" className="rounded-xl px-6" disabled={createBanner.isPending || updateBanner.isPending}>
+              {(createBanner.isPending || updateBanner.isPending) ? (
+                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...</>
+              ) : (
+                isEditing ? "Save Changes" : "Create Banner"
+              )}
             </Button>
           </div>
         </form>

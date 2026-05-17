@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { useListProducts, useCreateProduct, useUpdateProduct, useDeleteProduct, useListCategories, getListProductsQueryKey } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -11,157 +11,11 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { MultiImageUpload } from "@/components/admin/ImageUpload";
 import { toast } from "sonner";
-import { Plus, Edit, Trash2, Search, ImageIcon, Upload, X, Truck, Loader2 } from "lucide-react";
+import { Plus, Edit, Trash2, Search, ImageIcon, Truck, Loader2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-
-async function requestUploadUrl(file: File): Promise<{ uploadURL: string; objectPath: string }> {
-  const res = await fetch("/api/storage/uploads/request-url", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name: file.name, size: file.size, contentType: file.type }),
-  });
-  if (!res.ok) throw new Error("Failed to get upload URL");
-  return res.json();
-}
-
-async function uploadImageFile(file: File): Promise<string> {
-  const { uploadURL, objectPath } = await requestUploadUrl(file);
-  const uploadRes = await fetch(uploadURL, {
-    method: "PUT",
-    headers: { "Content-Type": file.type },
-    body: file,
-  });
-  if (!uploadRes.ok) throw new Error("Upload failed");
-  return `/api/storage${objectPath}`;
-}
-
-function ImageUploadSection({
-  images,
-  onChange,
-}: {
-  images: string[];
-  onChange: (images: string[]) => void;
-}) {
-  const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState<number>(0);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleFiles = async (files: FileList | null) => {
-    if (!files || files.length === 0) return;
-    setUploading(true);
-    setUploadProgress(0);
-    const newUrls: string[] = [];
-    for (let i = 0; i < files.length; i++) {
-      try {
-        const url = await uploadImageFile(files[i]);
-        newUrls.push(url);
-        setUploadProgress(Math.round(((i + 1) / files.length) * 100));
-      } catch {
-        toast.error(`Failed to upload ${files[i].name}`);
-      }
-    }
-    if (newUrls.length > 0) {
-      onChange([...images, ...newUrls]);
-      toast.success(`${newUrls.length} image${newUrls.length > 1 ? "s" : ""} uploaded`);
-    }
-    setUploading(false);
-    setUploadProgress(0);
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    handleFiles(e.dataTransfer.files);
-  };
-
-  const removeImage = (index: number) => {
-    onChange(images.filter((_, i) => i !== index));
-  };
-
-  return (
-    <div className="space-y-3">
-      <Label className="text-sm font-semibold">Product Images</Label>
-
-      {/* Upload Zone */}
-      <div
-        className={cn(
-          "border-2 border-dashed rounded-2xl p-6 text-center transition-colors cursor-pointer",
-          "hover:border-primary/50 hover:bg-primary/3",
-          uploading ? "opacity-60 cursor-not-allowed" : "cursor-pointer"
-        )}
-        onDragOver={e => e.preventDefault()}
-        onDrop={handleDrop}
-        onClick={() => !uploading && fileInputRef.current?.click()}
-      >
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          multiple
-          className="hidden"
-          onChange={e => handleFiles(e.target.files)}
-          disabled={uploading}
-          data-testid="input-image-upload"
-        />
-        {uploading ? (
-          <div className="flex flex-col items-center gap-2">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            <p className="text-sm text-muted-foreground">Uploading... {uploadProgress}%</p>
-            <div className="w-full max-w-xs h-2 bg-muted rounded-full overflow-hidden">
-              <div
-                className="h-full bg-primary rounded-full transition-all"
-                style={{ width: `${uploadProgress}%` }}
-              />
-            </div>
-          </div>
-        ) : (
-          <>
-            <Upload className="h-8 w-8 text-muted-foreground/50 mx-auto mb-2" />
-            <p className="text-sm font-medium text-foreground">Tap to select images</p>
-            <p className="text-xs text-muted-foreground mt-1">or drag and drop here</p>
-            <p className="text-xs text-muted-foreground/60 mt-1">JPG, PNG, WebP • Multiple allowed</p>
-          </>
-        )}
-      </div>
-
-      {/* Image Previews */}
-      {images.length > 0 && (
-        <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-          {images.map((img, index) => (
-            <div key={index} className="relative group aspect-square rounded-xl overflow-hidden bg-muted border-2 border-transparent hover:border-primary/30 transition-all">
-              <img
-                src={img}
-                alt={`Product image ${index + 1}`}
-                className="w-full h-full object-cover"
-                onError={e => (e.currentTarget.style.opacity = "0.3")}
-              />
-              {index === 0 && (
-                <div className="absolute top-1 left-1">
-                  <Badge className="text-[10px] px-1 py-0 bg-primary/90 text-white">Main</Badge>
-                </div>
-              )}
-              <button
-                type="button"
-                className="absolute top-1 right-1 bg-destructive/90 text-white rounded-full h-5 w-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow"
-                onClick={() => removeImage(index)}
-              >
-                <X className="h-3 w-3" />
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {images.length === 0 && (
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <ImageIcon className="h-3.5 w-3.5" />
-          No images yet. Upload at least one image.
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function AdminProducts() {
   const [search, setSearch] = useState("");
@@ -367,7 +221,8 @@ function ProductFormDialog({ productToEdit, categories }: { productToEdit?: any;
         <form onSubmit={handleSubmit} className="space-y-6 mt-2">
 
           {/* Images */}
-          <ImageUploadSection
+          <MultiImageUpload
+            label="Product Images"
             images={formData.images}
             onChange={(imgs) => setFormData({ ...formData, images: imgs })}
           />

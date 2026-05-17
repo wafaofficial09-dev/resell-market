@@ -1,0 +1,185 @@
+IMPORTANT:
+Do NOT recreate the website from scratch.
+Do NOT remove existing features or rewrite the entire project.
+Only MODIFY, UPGRADE, and IMPROVE the existing codebase professionally.
+
+The website is already good, but I need advanced improvements and premium upgrades.
+
+1. REMOVE ALL IMAGE URL INPUT SYSTEMS
+   Currently the admin panel asks for image URLs in:
+
+* Product upload
+* Banner upload
+* Homepage customization
+* Hero section
+* Offer banners
+
+Remove ALL URL-based image inputs completely.
+
+Replace them with:
+
+* “Upload From Device/Gallery”
+* Proper file upload UI
+* Drag-and-drop upload support
+* Mobile gallery picker
+* Image preview before upload
+* Upload progress loader
+
+Use Firebase Storage or Supabase Storage properly.
+
+All uploaded images must:
+
+* Store permanently
+* Generate automatic storage URLs internally
+* Save correctly in database
+* Load fast
+* Support realtime updates
+
+2. MULTIPLE IMAGE SUPPORT EVERYWHERE
+   Products should support:
+
+* Multiple product images
+* Product gallery slider
+* Thumbnail navigation
+* Smooth image switching
+* Full mobile responsiveness
+
+Banners should support:
+
+* Desktop image
+* Mobile image
+* Multiple rotating banners
+* Auto slider/carousel
+
+Admin should be able to:
+
+* Upload multiple images
+* Delete images
+* Reorder images
+* Preview images before saving
+
+3. MAKE THE WEBSITE LOOK MORE LUXURIOUS & PREMIUM
+   Do NOT redesign completely.
+   Only improve and polish the current design professionally.
+
+Upgrade the UI to feel like:
+
+* A luxury modern shopping brand
+* A premium startup website
+* High-end mobile shopping app
+
+Improve:
+
+* Typography
+* Layout spacing
+* Product cards
+* Shadows
+* Glassmorphism effects
+* Hover animations
+* Gradient effects
+* Premium button styles
+* Navbar design
+* Hero section quality
+* Product gallery UI
+* Checkout UI
+* Admin dashboard styling
+* Mobile responsiveness
+* Skeleton loading animations
+* Smooth page transitions
+* Luxury color palette
+* Premium fonts
+* Card borders and glow effects
+
+The website should feel:
+
+* Elegant
+* Expensive
+* Smooth
+* Professional
+* Modern
+* Highly polished
+
+4. PRODUCT DELIVERY CHARGE FEATURE
+   Inside admin product settings add:
+
+* “Enable Delivery Charge” toggle
+* Delivery fee amount field
+
+If enabled:
+
+* Automatically add delivery charge during checkout.
+
+Requirements:
+
+* Show delivery fee in cart summary
+* Show delivery fee in checkout
+* Auto calculate totals
+* Work for multiple products correctly
+
+5. CUSTOMER ORDER VALIDATION
+   Before customer can place order:
+   Make these fields compulsory:
+
+* Full Name
+* Phone Number
+
+Optional:
+
+* Address
+* Notes
+
+Requirements:
+
+* Proper validation
+* Error messages
+* Mobile-friendly inputs
+* Prevent empty orders
+
+6. ADMIN PANEL UPGRADE
+   Improve the admin panel professionally.
+
+Add:
+
+* Better dashboard UI
+* Premium cards
+* Better forms
+* Upload previews
+* Better spacing
+* Cleaner layouts
+* Responsive admin design
+* Toast notifications
+* Loading states
+* Better toggle switches
+* Better section organization
+
+7. DATABASE & STORAGE FIXES
+   Update backend safely without breaking existing data.
+
+Ensure:
+
+* Existing products remain safe
+* Existing banners remain safe
+* Existing orders remain safe
+* Realtime updates continue working
+* No RLS/security errors
+* No broken uploads
+* No permission issues
+
+8. PERFORMANCE & QUALITY
+   Improve:
+
+* Image optimization
+* Lazy loading
+* Loading speed
+* SEO
+* Mobile performance
+* Animation smoothness
+* Code cleanliness
+* Reusable components
+
+9. FINAL REQUIREMENT
+   Only modify the existing project intelligently.
+   Do not rebuild the entire website.
+   Keep all current functionality working.
+   Add these upgrades professionally.
+   The final website should feel like a real premium luxury e-commerce brand and not like a basic template.
