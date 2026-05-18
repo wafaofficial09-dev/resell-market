@@ -1,0 +1,119 @@
+IMPORTANT:
+Do NOT redesign the website.
+Do NOT recreate the product page.
+Do NOT change the current layout structure.
+Only FIX and REFINE the typography and product page experience professionally.
+
+CURRENT MAIN ISSUE:
+The PRODUCT TITLE FONT SIZE is still extremely large and aggressive.
+
+I am NOT asking to reduce the product image size now.
+Focus mainly on the FONT SIZE and product page refinement.
+
+FIX THESE ISSUES ONLY:
+
+1. REDUCE PRODUCT TITLE FONT SIZE PROPERLY
+   The product name/title is too huge and breaking the design.
+
+Requirements:
+
+* Make the title much smaller
+* Keep it premium and bold
+* Prevent aggressive oversized typography
+* Prevent ugly text wrapping
+* Improve line-height
+* Improve spacing between lines
+* Add max-width if needed
+* Keep responsive scaling for mobile/tablet/desktop
+
+The title should look:
+
+* Elegant
+* Luxury
+* Clean
+* Balanced
+* Professional
+
+Like premium brands:
+
+* Nike
+* Apple
+* Zara
+* Modern luxury e-commerce websites
+
+2. IMPROVE PRODUCT PAGE VISUAL BALANCE
+   Currently the page feels boring and empty.
+
+Without redesigning everything:
+
+* Improve spacing
+* Improve content alignment
+* Improve typography hierarchy
+* Improve product information section
+* Improve price section
+* Improve button alignment
+* Reduce unnecessary empty space
+
+3. ADD “BUY NOW” BUTTON
+   Currently there is only:
+
+* Add to Cart
+* Inquire
+
+Add:
+
+* Buy Now button
+
+Behavior:
+
+* Instantly open checkout page with selected product
+* Mobile responsive
+* Smooth transition
+
+4. ADD RELATED PRODUCTS SECTION
+   When customer opens a product page:
+   Show related/similar products below.
+
+Requirements:
+
+* Related by category
+* Premium product cards
+* Responsive grid/carousel
+* Smooth hover effects
+* Clicking opens product page
+
+5. MAKE PRODUCT PAGE LOOK MORE COMPLETE
+   Add elegant sections like:
+
+* Product highlights
+* Delivery information
+* Trust badges
+* Similar products
+* Offer information
+
+The page should no longer feel empty or unfinished.
+
+6. KEEP CURRENT DESIGN SYSTEM
+   Do NOT:
+
+* Change theme completely
+* Remove features
+* Rebuild the project
+* Change backend structure
+
+Only refine and improve the current implementation professionally.
+
+7. FINAL RESULT
+   The final product page should feel:
+
+* Balanced
+* Luxury
+* Premium
+* Modern
+* Professional
+* Compact
+* Easy to read
+* Mobile-friendly
+
+Most importantly:
+FIX the oversized PRODUCT TITLE FONT SIZE properly without breaking the current design.
