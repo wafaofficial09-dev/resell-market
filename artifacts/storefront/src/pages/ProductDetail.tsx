@@ -21,7 +21,7 @@ export default function ProductDetail() {
   const [, setLocation] = useLocation();
 
   const { data: product, isLoading } = useGetProduct(productId, {
-    query: { enabled: !!productId },
+    query: { queryKey: ["product", productId], enabled: !!productId },
   });
 
   const { data: settings } = useGetSettings();
