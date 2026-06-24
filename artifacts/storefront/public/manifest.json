@@ -1,0 +1,17 @@
+{
+  "name": "ShopEasy - Premium Reselling Store",
+  "short_name": "ShopEasy",
+  "description": "Premium reselling store app",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff3c00",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
